@@ -319,6 +319,20 @@ button:focus-visible{outline:3px solid #6fa8d8;outline-offset:2px}
 #ptp2 h3{margin:0;font-size:17px;font-weight:900;display:flex;align-items:center;gap:6px}
 #ptp2 p{white-space:pre-line;margin:0 0 4px;font-size:13px;line-height:1.6;color:#6b749c;font-weight:700}
 .ptres{display:flex;align-items:baseline;justify-content:center;gap:6px}.ptres b{font-size:44px;font-weight:900;color:#e0457b}
+
+body.ending #ui,body.ending #hud,body.ending #note{display:none}
+#ed{position:absolute;inset:0;z-index:30;display:flex;flex-direction:column;justify-content:space-between;color:#fff}
+#ed[hidden]{display:none}
+#edcur{position:absolute;inset:0;background:#1f2a5a;opacity:1;transition:opacity .45s;z-index:1;pointer-events:none}
+.edbar{height:9%;background:#1f2a5a;position:relative;z-index:2}
+#edcap{position:absolute;left:0;right:0;bottom:12%;z-index:3;text-align:center;font-size:19px;font-weight:900;color:#fff;-webkit-text-stroke:5px #1f2a5a;paint-order:stroke fill;padding:0 18px;line-height:1.5;opacity:0}
+#eddots{position:absolute;left:0;right:0;bottom:10.4%;z-index:3;display:flex;justify-content:center;gap:5px}
+#eddots i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.5);border:1.5px solid #1f2a5a}#eddots i.on{background:#ffe58a}
+#edskip{position:absolute;right:12px;top:calc(9% + 8px);z-index:4;border:2.5px solid #1f2a5a;background:#fff;color:#1f2a5a;border-radius:999px;padding:4px 14px;font-weight:900;font-size:12px}
+#edcard{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:5;width:min(86vw,330px);background:#fff;color:#1f2a5a;border:3px solid #1f2a5a;border-radius:22px;box-shadow:0 5px 0 #1f2a5a;padding:18px 16px;display:flex;flex-direction:column;gap:9px;text-align:center}
+#edcard[hidden]{display:none}
+#edcard b{font-size:34px;font-weight:900;color:#e0457b}
+#edcard p{white-space:pre-line;margin:0;font-size:13px;line-height:1.7;font-weight:700;color:#4a5380}
 </style>
 </head>
 <body>
@@ -337,6 +351,7 @@ button:focus-visible{outline:3px solid #6fa8d8;outline-offset:2px}
   <div id="spot"><div id="wrap"><i id="shadow"></i><div id="bob"><img id="ch" alt="イデコちゃん"></div></div></div>
   <div id="fx"></div>
   <div id="note"></div>
+  <div id="ed" hidden><div id="edcur"></div><div class="edbar"></div><div id="edcap"></div><div id="eddots"></div><button id="edskip" data-ed="skip">スキップ</button><div id="edcard" hidden></div><div class="edbar"></div></div>
 </div>
 <div id="ui">
   <div id="tabs">
@@ -532,7 +547,7 @@ function render(){
  if(lastP!==S.place){lastP=S.place;$('#scene').innerHTML=SC[S.place]()}
  document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('on',b.dataset.tab===tab));
  let h='';
- if(tab==='act'){PL[S.place].acts.forEach((a,i)=>{if(a.cook&&OUT[S.outfit].k!=='01')return;if(a.mini==='patrol'&&OUT[S.outfit].k!=='03')return;h+=bt(`data-a="${i}"`,AI[a.l],a.l,a.mini?(a.mini==='shop'?'ショップへ':a.mini==='meet'?'かいぎしつへ':'ミニゲーム'):a.cook?'ランダムでつくる':hint(a),i)});if(S.place==='home')h+=bt('data-rv="1"','chart','うんようをみなおす','わりあいをかえる',4)}
+ if(tab==='act'){PL[S.place].acts.forEach((a,i)=>{if(a.cook&&OUT[S.outfit].k!=='01')return;if(a.mini==='patrol'&&OUT[S.outfit].k!=='03')return;h+=bt(`data-a="${i}"`,AI[a.l],a.l,a.mini?(a.mini==='shop'?'ショップへ':a.mini==='meet'?'かいぎしつへ':'ミニゲーム'):a.cook?'ランダムでつくる':a.end?'エンディングへ':hint(a),i)});if(S.place==='home')h+=bt('data-rv="1"','chart','うんようをみなおす','わりあいをかえる',4)}
  if(tab==='go'){Object.keys(PL).filter(k=>k!=='hawaii').forEach((k,i)=>h+=bt(`data-g="${k}"`,k,PL[k].n,k===S.place?'いまここ':'',i,k===S.place));if(S.trip)h+=bt('data-g="hawaii"','hawaii','りょこう',S.place==='hawaii'?'いまここ':'ハワイ(バカンス)',5,S.place==='hawaii')}
  if(tab==='wear')OUT.forEach((o,i)=>{const ow=S.owned.includes(i);h+=bt(`data-w="${i}"`,ow?OI[o.n]:'lock',o.n,i===S.outfit?'きている':ow?'きる':'ロックちゅう',i,i===S.outfit,!ow)});
  $('#grid').innerHTML=h;setImg(face())}
@@ -553,6 +568,7 @@ function endMonth(){let m='';S.step=0;S.month++;
  writeSave();return ' 月がかわり、10,000円が入金されて、1万円をiDeCoに自動でつみたてました。'+m}
 function step(){S.step++;return S.step>=3?endMonth():''}
 function act(i){const a=PL[S.place].acts[i];
+ if(a.end){openEnding();return}
  if(a.cook&&OUT[S.outfit].k!=='01')return;
  if(a.mini==='patrol'&&OUT[S.outfit].k!=='03')return;
  if(a.mini){if((a.mini==='meet'&&S.en<8)||(a.mini==='pk'&&S.en<10)||(a.mini==='patrol'&&S.en<10)){note('つかれています。「おうち」で休みましょう。');react(false,'shake');return}
@@ -561,7 +577,7 @@ function act(i){const a=PL[S.place].acts[i];
  if(a.cash<0&&S.cash<-a.cash){note('おこづかいがたりません。');react(false,'shake');return}
  S.en=cl(S.en+(a.en||0));S.mood=cl(S.mood+(a.mood||0));S.know=cl(S.know+(a.know||0));const gain=a.work?earn():(a.cash||0);S.cash+=gain;
  const m=step();let extra='';if(a.know)extra=' メモ：'+pick(FACTS);
- note(a.t+(a.work?'（+'+yen(gain)+'）':'')+extra+m);hearts(a.mood>0?3:1);react(a.mood>=10);render();if(a.cook)cookDone(m)}
+ note(a.t+(a.work?'（+'+yen(gain)+(suit()?'・サラリーマンの服で1.5倍！':'')+'）':'')+extra+m);hearts(a.mood>0?3:1);react(a.mood>=10);render();if(a.cook)cookDone(m)}
 function save(x){if(S.cash<x){note('おこづかいがたりません。');react(false,'shake');return}
  S.cash-=x;S.inv+=x;S.val+=x;S.mood=cl(S.mood+3);S.know=cl(S.know+2);
  note(yen(x)+'を積み立てました。原則60歳になるまで引き出せないお金です。メモ：'+pick(FACTS));hearts(3,'🌱');react(true);render()}
@@ -715,6 +731,7 @@ document.addEventListener('click',e=>{
  else if(a==='title')sheet('タイトルにもどる？','セーブしていない分は、もどると消えます。',[['stsave','セーブしてもどる',1],['tonly','セーブせずにもどる'],['x','やめる']]);
  else if(a==='stsave'){writeSave();$('#sheet').hidden=true;showTitle()}
  else if(a==='tonly'){$('#sheet').hidden=true;showTitle()}
+ else if(a==='trip'){$('#sheet').hidden=true;go('hawaii')}
  else if(a==='wear'&&SH){S.outfit=SH.last;$('#sheet').hidden=true;note('「'+OUT[S.outfit].n+'」にきがえました。');render()}
  else $('#sheet').hidden=true});
 
@@ -778,14 +795,16 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-shop]');if
  if(a==='exit')closeShop();else if(a.startsWith('buy'))buy(+a.slice(3))});
 
 /* ===== money rule helpers & Hawaii ===== */
-const earn=()=>Math.round(8000*(1+S.know/100)/100)*100;
-function checkTrip(){if(!S.trip&&S.cash+S.val>=1000000){S.trip=true;setTimeout(()=>{note('◆お金とiDeCoの合計が100万円！「おでかけ」に「りょこう」が出ました。ハワイでバカンスに行けます。');hearts(5,'✨')},0)}}
+const suit=()=>OUT[S.outfit].k==='02';
+const earn=()=>Math.round(8000*(1+S.know/100)*(suit()?1.5:1)/100)*100;
+function checkTrip(){if(!S.trip&&S.cash+S.val>=1000000){S.trip=true;setTimeout(()=>{note('◆お金とiDeCoの合計が100万円！ハワイに行けるようになりました。');hearts(5,'✨');tripPop()},0)}}
 Object.assign(P,{hawaii:'<circle cx="35" cy="13" r="7" fill="#ffd34d"/><path d="M22 42q-3-13 2-24" fill="none" style="stroke-width:3.4"/><path d="M24 18q-9-8-17-1 8-2 17 1zM24 18q3-10 14-9-8 1-14 9zM24 18q12-1 17 7-7-5-17-7z" fill="#4cc38a"/><path d="M6 42h36" fill="none"/>'});
 PL.hawaii={n:'ハワイ',e:'',d:[],acts:[
  {l:'ビーチでのんびり',e:'',en:25,mood:25,t:'ハワイのビーチでのんびり。波の音に包まれて、心まで休まります。'},
  {l:'およぐ',e:'',en:-10,mood:18,t:'あたたかい海で、思いっきり泳ぎました！'},
- {l:'ココナッツ',e:'',en:8,mood:10,t:'ココナッツジュースで、ひと息つきました。'}]};
-Object.assign(AI,{'ビーチでのんびり':'tea','およぐ':'shoe','ココナッツ':'cake'});
+ {l:'ココナッツ',e:'',en:8,mood:10,t:'ココナッツジュースで、ひと息つきました。'},
+ {l:'まんぞくした',end:1}]};
+Object.assign(AI,{'ビーチでのんびり':'tea','およぐ':'shoe','ココナッツ':'cake','まんぞくした':'heart'});
 const palm=(x,y,s)=>`<g transform="translate(${x} ${y}) scale(${s})"><path d="M0 0q-7-42 6-92" fill="none" style="stroke-width:15"/><path d="M0 0q-7-42 6-92" fill="none" style="stroke:#c98a5b;stroke-width:9"/><g transform="translate(6 -92)">${[-35,15,65,150,205].map(a=>`<path d="M0 0q32-28 60-6q-28-3-60 6z" fill="#4cc38a" transform="rotate(${a})"/>`).join('')}<circle cx="-3" cy="6" r="5" fill="#8f5a34"/><circle cx="7" cy="8" r="5" fill="#8f5a34"/></g></g>`;
 SC.hawaii=()=>sv(`<rect x="-4" y="214" width="408" height="84" fill="#5fcbe8"/><path d="M0 232q15-8 30 0t30 0 30 0 30 0 30 0 30 0 30 0 30 0 30 0 30 0 30 0 30 0 30 0" fill="none" style="stroke:#fff;stroke-width:3"/><path d="M0 262q15-8 30 0t30 0 30 0 30 0 30 0 30 0 30 0 30 0 30 0 30 0 30 0 30 0 30 0" fill="none" style="stroke:#bfeeff;stroke-width:3"/><rect x="-4" y="296" width="408" height="90" fill="#ffe3a8"/><path d="M-4 296q20-8 40 0t40 0 40 0 40 0 40 0 40 0 40 0 40 0 40 0 40 0" fill="#fff"/>`+
  `<g transform="translate(318 170)"><g fill="none">${[0,1,2,3,4,5,6,7].map(i=>`<path d="M0 -32v-8" transform="rotate(${i*45})"/>`).join('')}</g><circle r="23" fill="#ffd34d"/><circle class="ns" cx="-7" cy="-3" r="2.2" fill="#1f2a5a"/><circle class="ns" cx="7" cy="-3" r="2.2" fill="#1f2a5a"/><circle class="ns" cx="-12" cy="5" r="3.5" fill="#ff8fa8"/><circle class="ns" cx="12" cy="5" r="3.5" fill="#ff8fa8"/><path d="M-5 5q5 6 10 0" fill="none"/></g>`+
@@ -800,8 +819,9 @@ const MEETLN=['それでは、きょうのかいぎをはじめます！ぎだ�
 let MT=null;
 function openMeet(){MT={n:0,last:-1};$('#mtp').innerHTML=ico('meet',18)+'かいぎしつ';$('#kimg').src=IMG['02'];$('#mimg').src=IMG['21'];
  const bg=$('#mtbg');bg.innerHTML=dots('#fff')+`<rect x="82" y="70" width="84" height="72" rx="6" fill="#fff"/><path d="M92 128l16-20 14 10 20-26 14 12" fill="none" style="stroke:#ff6f91;stroke-width:3"/><rect x="92" y="78" width="32" height="6" rx="3" fill="#8fb8ff"/><rect x="246" y="70" width="68" height="68" rx="8" fill="#bfe9ff"/><path d="M280 70v68M246 104h68" fill="none"/><circle cx="262" cy="86" r="7" fill="#ffd34d"/><circle cx="296" cy="168" r="16" fill="#fff"/><path d="M296 168v-9M296 168l7 5" fill="none"/>`+sp4(210,150,1,'#ffd34d');
- $('#kbub').textContent='みなさん、おつかれさまです。かいぎをはじめましょう！（かじきちゃんをタッチ）';$('#mt').hidden=false}
-function kTap(){if(!MT)return;let i;do{i=MT.n===0?0:Math.floor(Math.random()*MEETLN.length)}while(i===MT.last&&MEETLN.length>1);MT.last=i;MT.n++;$('#kbub').textContent=MEETLN[i];
+ $('#kbub').textContent=suit()?'おっ、いいスーツだね！かいぎをはじめましょう！（かじきちゃんをタッチ）':'みなさん、おつかれさまです。かいぎをはじめましょう！（かじきちゃんをタッチ）';$('#mt').hidden=false}
+const SUITLN=['いいスーツだね！'];
+function kTap(){if(!MT)return;let i,txt;if(MT.n>0&&suit()&&MT.last!==100&&Math.random()<.2){i=100;txt=SUITLN[0]}else{do{i=MT.n===0?0:Math.floor(Math.random()*MEETLN.length)}while(i===MT.last&&MEETLN.length>1);txt=MEETLN[i]}MT.last=i;MT.n++;$('#kbub').textContent=txt;
  const k=$('#kimg');k.classList.remove('kh');void k.offsetWidth;k.classList.add('kh')}
 function endMeet(){const m=MT;$('#mt').hidden=true;MT=null;
  if(m&&m.n){S.know=cl(S.know+8);S.en=cl(S.en-8);S.mood=cl(S.mood+2);const s=step();note('かじきちゃんとかいぎをしました。まなびが上がりました。'+s);react(true);hearts(3)}
@@ -1082,6 +1102,31 @@ document.addEventListener('click',e=>{if(!PT)return;const b=e.target.closest('[d
  if(a==='start')start();else if(a==='end')close();else if(a==='quit'){if(PT.state==='play')note('パトロールはおやすみしました。');close()}});
 document.addEventListener('pointerdown',e=>{if(PT&&e.target.closest('#ptw'))tap(e)});
 })();
+
+/* ===== trip popup & ending ===== */
+function tripPop(){const busy=['#pt','#kk','#mg','#mt','#shop','#pick','#adv','#title','#ed'].some(s=>{const e=document.querySelector(s);return e&&!e.hidden})||!$('#sheet').hidden;
+ if(busy){setTimeout(tripPop,800);return}
+ const x=`<svg viewBox="0 0 300 110" class="ic" aria-hidden="true" style="width:100%;border:3px solid #1f2a5a;border-radius:16px;background:linear-gradient(#8fdcff,#dff7ff)"><g transform="translate(46 36)"><g fill="none">${[0,1,2,3,4,5,6,7].map(i=>`<path d="M0 -24v-6" transform="rotate(${i*45})"/>`).join('')}</g><circle r="16" fill="#ffd34d"/></g><rect class="ns" x="0" y="82" width="300" height="28" fill="#5fcbe8"/><path d="M0 90q12-7 24 0t24 0 24 0 24 0 24 0 24 0 24 0 24 0 24 0 24 0 24 0 24 0 24 0" fill="none" style="stroke:#fff;stroke-width:2.6"/>${palm(238,100,.46)}${sp4(150,34,1,'#ffd34d')}${sp4(110,58,.7,'#ff8fa8')}</svg>`;
+ sheet(ico('hawaii',26)+'100万円たっせい！','お金とiDeCoの合計が100万円になったよ！\nハワイに行けるようになったよ！\n「おでかけ」や「こうどう」から、いつでも行けるよ。',[['trip','ハワイへ行く',1],['x','あとで']],x)}
+const EDS=[['home','05','イデコちゃんの ものがたり'],['home','01','おうちで りょうりに ちょうせん！'],['park','05','こうえんで サッカー！ ゴールをめざして'],['work','02','しごとばで かいぎ。まなんで、はたらいて'],['town','03','まちを パトロール！ わるいひとは タイホ！'],['friend','22','ともだちの いえで ポーカー！'],['town','11','おかいもので すてきな おきがえ'],['hawaii','14','コツコツ つみたてて、ハワイに とうちゃく！'],['hawaii','08','まんぞく！ ありがとう！']];
+let ED=null;
+function edStop(){if(ED){ED.t.forEach(clearTimeout);ED.t=[]}}
+function edScene(i){const s=EDS[i],cur=$('#edcur');cur.style.opacity=1;
+ ED.t.push(setTimeout(()=>{S.place=s[0];lastP=s[0];$('#stage').dataset.p=s[0];$('#scene').innerHTML=SC[s[0]]();setImg(s[1]);
+  const cap=$('#edcap');cap.textContent=s[2];cap.animate([{opacity:0,transform:'translateY(10px)'},{opacity:1,transform:'translateY(0)'}],{duration:600,fill:'forwards'});
+  $('#wrap').animate([{transform:`translateX(${i%2?60:-60}px)`,opacity:0},{transform:'translateX(0)',opacity:1}],{duration:800,easing:'ease-out'});
+  cur.style.opacity=0;hearts(2,'✨');$('#eddots').innerHTML=EDS.map((_,k)=>`<i${k===i?' class="on"':''}></i>`).join('')},450));
+ ED.t.push(setTimeout(()=>i+1<EDS.length?edScene(i+1):edEnd(),3400))}
+function edEnd(){edStop();const cur=$('#edcur');cur.style.opacity=1;
+ ED.t.push(setTimeout(()=>{$('#edcap').textContent='';$('#eddots').innerHTML='';
+  $('#edcard').innerHTML=`<b>おしまい</b><p>${Math.ceil(S.month)}か月、コツコツつづけたよ。\nお金 ${yen(S.cash)} ＋ iDeCo ${yen(S.val)}\nこれからも、イデコちゃんと いっしょに。</p><button class="mb p" data-ed="cont">イデコライフをつづける</button><button class="mb" data-ed="again">もういちど見る</button>`;
+  $('#edcard').hidden=false;$('#edskip').hidden=true;cur.style.opacity=.35;hearts(5,'✨')},450))}
+function openEnding(){$('#sheet').hidden=true;document.body.classList.add('ending');$('#ed').hidden=false;$('#edcard').hidden=true;$('#edskip').hidden=false;
+ ED={t:[],home:S.place};$('#edcur').style.opacity=1;edScene(0)}
+function edClose(){edStop();ED=null;$('#ed').hidden=true;document.body.classList.remove('ending');S.place='home';lastP=null;S.mood=cl(S.mood+10);
+ note('イデコライフをつづけます！これからも、コツコツ、たのしくつづけよう。');hearts(4,'✨');react(true);render()}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-ed]');if(!b||!ED)return;const a=b.dataset.ed;
+ if(a==='cont')edClose();else if(a==='skip'){edStop();edEnd()}else if(a==='again'){$('#edcard').hidden=true;$('#edskip').hidden=false;edScene(0)}});
 
 </script>
 </body>
