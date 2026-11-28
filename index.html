@@ -341,6 +341,28 @@ body.ending #ui,body.ending #hud,body.ending #note{display:none}
 #edcard b{font-size:34px;font-weight:900;color:#e0457b}
 #edcard p{white-space:pre-line;margin:0;font-size:13px;line-height:1.7;font-weight:700;color:#4a5380}
 
+#sf{position:fixed;inset:0;z-index:26;display:flex;flex-direction:column;background:var(--bg);color:#1f2a5a;padding-top:env(safe-area-inset-top,0px)}
+#sf[hidden]{display:none}
+#sf .top{padding:8px 12px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+#sfsc{padding:0 12px 8px;display:flex;align-items:center;gap:10px;font-weight:900}
+#sfs{display:inline-flex;align-items:center;gap:5px;white-space:nowrap}#sfs b{font-size:22px}#sfs small{font-size:12px}
+#sfb{font-weight:900;font-size:13px}#sfb b{font-size:15px}#sfb.new{color:#e0457b}
+#sfhint{flex:1;text-align:right;font-size:11px;color:#6b749c;font-weight:700}
+#sfst{position:relative;flex:1;min-height:0;overflow:hidden;background:linear-gradient(#a8e4ff,#e6f8ff 55%);touch-action:manipulation;-webkit-user-select:none;user-select:none;border-top:3px solid #1f2a5a;cursor:pointer}
+.sfl{position:absolute;left:0;top:0;bottom:0;pointer-events:none;will-change:transform}
+.sfl svg{display:block;float:left}
+#sfw{position:absolute;inset:0;pointer-events:none;z-index:8}
+.sfw{position:absolute;left:0;top:0;will-change:transform}
+#sfme{position:absolute;left:0;top:0;z-index:12;pointer-events:none;will-change:transform}
+#sfimg{display:block;margin:0 auto;width:auto}
+#sfbd{position:absolute;left:50%;bottom:-14px;width:118%;margin-left:-59%;transform-origin:50% 50%}
+#sffx{position:absolute;inset:0;pointer-events:none;z-index:50}
+.sfbb{position:absolute;border-radius:50%;border:2px solid #fff;background:rgba(255,255,255,.4)}
+#sfov{position:absolute;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;background:rgba(31,42,90,.45);cursor:default}
+#sfov[hidden]{display:none}
+#sfp2{width:min(88vw,340px);background:#fff;color:#1f2a5a;border:3px solid #1f2a5a;border-radius:22px;box-shadow:0 5px 0 #1f2a5a;padding:16px;display:flex;flex-direction:column;gap:8px}
+#sfp2 h3{margin:0;font-size:17px;font-weight:900;display:flex;align-items:center;gap:6px}
+#sfp2 p{white-space:pre-line;margin:0 0 4px;font-size:13px;line-height:1.6;color:#6b749c;font-weight:700}
 #sw{position:fixed;inset:0;z-index:44;display:flex;align-items:center;justify-content:center;background:rgba(31,42,90,.5)}
 #sw[hidden]{display:none}
 #swp{width:min(92vw,340px);background:#fff;color:#1f2a5a;border:3px solid #1f2a5a;border-radius:24px;box-shadow:0 6px 0 #1f2a5a;padding:12px 14px 14px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
@@ -422,7 +444,7 @@ body.ending #ui,body.ending #hud,body.ending #note{display:none}
     <button class="mb p" data-t="new">はじめから</button>
     <button class="mb" data-t="cont" id="tcont">つづきから<small id="tinfo"></small></button>
   </div>
-  <p id="tlegal">※非公式の試作です。イデコちゃんは国民年金基金連合会のキャラクターです。<span id="tver">ver1.9</span></p>
+  <p id="tlegal">※非公式の試作です。イデコちゃんは国民年金基金連合会のキャラクターです。<span id="tver">ver2.1</span></p>
 </div>
 <div id="kk" hidden>
   <div class="top"><button class="tab" data-kk="quit" style="padding:7px 16px">やめる</button><div class="chip" id="kkp"></div></div>
@@ -465,6 +487,12 @@ body.ending #ui,body.ending #hud,body.ending #note{display:none}
   <div id="ptsc"><div class="chip" id="pts"></div><div id="ptt"><i></i></div></div>
   <div id="ptst"><div class="ptl" id="ptl0"></div><div class="ptl" id="ptl1"></div><div class="ptl" id="ptl2"></div><div id="ptw"></div><div id="ptme"><div><img id="ptimg" alt="イデコちゃん"></div></div><div id="ptfx"></div>
    <div id="ptov" hidden><div id="ptp2"></div></div></div>
+</div>
+<div id="sf" hidden>
+  <div class="top"><button class="tab" data-sf="quit" style="padding:7px 16px">やめる</button><span style="display:flex;gap:6px"><div class="chip" id="sfb"></div><div class="chip" id="sfl"></div></span></div>
+  <div id="sfsc"><div class="chip" id="sfs"></div><div id="sfhint">なみがきたら タップでジャンプ！</div></div>
+  <div id="sfst"><div class="sfl" id="sfl0"></div><div class="sfl" id="sfl1"></div><div class="sfl" id="sfl2"></div><div id="sfw"></div><div id="sfme"><img id="sfimg" alt="サーフィンするイデコちゃん"><svg id="sfbd" viewBox="0 0 120 28" class="ic" aria-hidden="true"><path d="M4 14C20 2 100 2 116 14 100 26 20 26 4 14z" fill="#ffd34d" stroke="#1f2a5a" stroke-width="3"/><path d="M20 14h80" stroke="#ff8fa8" stroke-width="4" stroke-linecap="round"/></svg></div><div id="sffx"></div>
+   <div id="sfov" hidden><div id="sfp2"></div></div></div>
 </div>
 <div id="sw" hidden><div id="swp"><h3>ブランコであそぶ</h3>
   <div id="swstage"><svg viewBox="0 0 300 300" aria-hidden="true">
@@ -633,8 +661,8 @@ function act(i){const a=PL[S.place].acts[i];
  if(a.swing&&!SWNOW){if(S.en<6){note('つかれています。「おうち」で休みましょう。');react(false,'shake');return}openSwing(i);return}
  if(a.cook&&OUT[S.outfit].k!=='01')return;
  if(a.mini==='patrol'&&OUT[S.outfit].k!=='03')return;
- if(a.mini){if((a.mini==='meet'&&S.en<8)||(a.mini==='pk'&&S.en<10)||(a.mini==='patrol'&&S.en<10)){note('つかれています。「おうち」で休みましょう。');react(false,'shake');return}
-  a.mini==='shop'?openShop():a.mini==='meet'?openMeet():a.mini==='pk'?openPK():a.mini==='patrol'?openPT():openMG();return}
+ if(a.mini){if((a.mini==='meet'&&S.en<8)||(a.mini==='pk'&&S.en<10)||(a.mini==='patrol'&&S.en<10)||(a.mini==='surf'&&S.en<10)){note('つかれています。「おうち」で休みましょう。');react(false,'shake');return}
+  a.mini==='surf'?openSF():a.mini==='shop'?openShop():a.mini==='meet'?openMeet():a.mini==='pk'?openPK():a.mini==='patrol'?openPT():openMG();return}
  if(a.en<0&&S.en<-a.en){note('つかれています。「おうち」で休みましょう。');react(false,'shake');return}
  if(a.cash<0&&S.cash<-a.cash){note('おこづかいがたりません。');react(false,'shake');return}
  S.en=cl(S.en+(a.en||0));S.mood=cl(S.mood+(a.mood||0));S.know=cl(S.know+(a.know||0)+(a.know&&gk()?1:0));const gain=a.work?earn():(a.cash||0);S.cash+=gain;
@@ -865,6 +893,7 @@ PL.hawaii={n:'ハワイ',e:'',d:[],acts:[
  {l:'ビーチでのんびり',e:'',en:25,mood:25,t:'ハワイのビーチでのんびり。波の音に包まれて、心まで休まります。'},
  {l:'およぐ',e:'',en:-10,mood:18,t:'あたたかい海で、思いっきり泳ぎました！'},
  {l:'ココナッツ',e:'',en:8,mood:10,t:'ココナッツジュースで、ひと息つきました。'},
+ {l:'サーフィン',mini:'surf'},
  {l:'まんぞくした',end:1}]};
 Object.assign(AI,{'ビーチでのんびり':'tea','およぐ':'shoe','ココナッツ':'cake','まんぞくした':'heart'});
 const palm=(x,y,s)=>`<g transform="translate(${x} ${y}) scale(${s})"><path d="M0 0q-7-42 6-92" fill="none" style="stroke-width:15"/><path d="M0 0q-7-42 6-92" fill="none" style="stroke:#c98a5b;stroke-width:9"/><g transform="translate(6 -92)">${[-35,15,65,150,205].map(a=>`<path d="M0 0q32-28 60-6q-28-3-60 6z" fill="#4cc38a" transform="rotate(${a})"/>`).join('')}<circle cx="-3" cy="6" r="5" fill="#8f5a34"/><circle cx="7" cy="8" r="5" fill="#8f5a34"/></g></g>`;
@@ -1165,7 +1194,7 @@ document.addEventListener('pointerdown',e=>{if(PT&&e.target.closest('#ptw'))tap(
 })();
 
 /* ===== trip popup & ending ===== */
-function tripPop(){const busy=['#pt','#kk','#mg','#mt','#shop','#pick','#adv','#title','#ed','#sw'].some(s=>{const e=document.querySelector(s);return e&&!e.hidden})||!$('#sheet').hidden;
+function tripPop(){const busy=['#pt','#kk','#mg','#mt','#shop','#pick','#adv','#title','#ed','#sw','#sf'].some(s=>{const e=document.querySelector(s);return e&&!e.hidden})||!$('#sheet').hidden;
  if(busy){setTimeout(tripPop,800);return}
  const x=`<svg viewBox="0 0 300 110" class="ic" aria-hidden="true" style="width:100%;border:3px solid #1f2a5a;border-radius:16px;background:linear-gradient(#8fdcff,#dff7ff)"><g transform="translate(46 36)"><g fill="none">${[0,1,2,3,4,5,6,7].map(i=>`<path d="M0 -24v-6" transform="rotate(${i*45})"/>`).join('')}</g><circle r="16" fill="#ffd34d"/></g><rect class="ns" x="0" y="82" width="300" height="28" fill="#5fcbe8"/><path d="M0 90q12-7 24 0t24 0 24 0 24 0 24 0 24 0 24 0 24 0 24 0 24 0 24 0 24 0 24 0" fill="none" style="stroke:#fff;stroke-width:2.6"/>${palm(238,100,.46)}${sp4(150,34,1,'#ffd34d')}${sp4(110,58,.7,'#ff8fa8')}</svg>`;
  sheet(ico('hawaii',26)+'100万円たっせい！','お金とiDeCoの合計が100万円になったよ！\nハワイに行けるようになったよ！\n「おでかけ」や「こうどう」から、いつでも行けるよ。',[['trip','ハワイへ行く',1],['x','あとで']],x)}
@@ -1190,7 +1219,7 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-ed]');if(!
  if(a==='cont')edClose();else if(a==='skip'){edStop();edEnd()}else if(a==='again'){$('#edcard').hidden=true;$('#edskip').hidden=false;edScene(0)}});
 
 /* ===== birthday (10/4, month 7 week 1) ===== */
-function bdayPop(){const busy=['#pt','#kk','#mg','#mt','#shop','#pick','#adv','#title','#ed','#bd','#sw'].some(s=>{const e=document.querySelector(s);return e&&!e.hidden})||!$('#sheet').hidden;
+function bdayPop(){const busy=['#pt','#kk','#mg','#mt','#shop','#pick','#adv','#title','#ed','#bd','#sw','#sf'].some(s=>{const e=document.querySelector(s);return e&&!e.hidden})||!$('#sheet').hidden;
  if(busy){setTimeout(bdayPop,800);return}
  const bd=$('#bd');bd.hidden=false;$('#bdimg').src=IMG['08'];
  const cs=$('#bdc');cs.innerHTML='';const cols=['#ff8fa8','#ffd34d','#7fd0ff','#8be0a0','#c49bff','#ffb36b'];
@@ -1230,6 +1259,69 @@ document.addEventListener('click',e=>{
  ['gesturestart','gesturechange','gestureend'].forEach(k=>document.addEventListener(k,e=>e.preventDefault()));
  document.addEventListener('dblclick',e=>e.preventDefault());
  document.addEventListener('touchmove',e=>{if(e.touches&&e.touches.length>1&&e.cancelable)e.preventDefault()},{passive:false})})();
+/* ===== surfing mini-game (Hawaii) ===== */
+(function(){
+Object.assign(P,{surf:'<path d="M24 3c9 8 11 24 0 42C13 27 15 11 24 3z" fill="#ffd34d"/><path d="M24 8v32" fill="none"/><path d="M4 42q5-5 10 0t10 0 10 0 10 0" fill="none" style="stroke:#3cb6f0;stroke-width:3.4"/>'});
+Object.assign(AI,{'サーフィン':'surf'});
+const INK='#1f2a5a';let SF=null;
+const TJ=.85;
+function wavySvg(W,H,y0,col,line,n,amp){let d=`M0 ${y0}`;for(let i=0;i<=n*8;i++){const x=W*i/(n*8);d+=`L${x.toFixed(1)} ${(y0+Math.sin(i/8*Math.PI*2)*amp).toFixed(1)}`}d+=`L${W} ${H}L0 ${H}Z`;
+ let l='';for(const yy of line){l+=`<path d="M0 ${yy}`;for(let i=0;i<=n*8;i++){const x=W*i/(n*8);l+=`L${x.toFixed(1)} ${(yy+Math.sin(i/8*Math.PI*2+1)*amp*.8).toFixed(1)}`}l+=`" fill="none" style="stroke:#fff;stroke-opacity:.7;stroke-width:2.5px"/>`}
+ return `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" class="ic" aria-hidden="true"><path d="${d}" fill="${col}" style="stroke:none"/>${l}</svg>`}
+function skySvg(W,H){const cl=(x,y,s)=>`<g transform="translate(${x} ${y}) scale(${s})" fill="#fff" stroke="${INK}" stroke-width="2.5"><path d="M0 28h58a14 14 0 0 0 0-28 18 18 0 0 0-34-4 14 14 0 0 0-24 12 10 10 0 0 0 0 20z"/></g>`;
+ const isl=x=>`<g transform="translate(${x} ${H*.5})"><path d="M0 0q40-46 90 0z" fill="#6fd08a" stroke="${INK}" stroke-width="2.5"/><path d="M60 -26q-3-24 4-42" fill="none" stroke="#c98a5b" stroke-width="5"/><path d="M64 -68q-14-10-26-2 12-2 26 2zM64 -68q4-14 20-12-12 2-20 12z" fill="#4cc38a" stroke="${INK}" stroke-width="2"/></g>`;
+ return `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" class="ic" aria-hidden="true"><circle cx="${W*.78}" cy="${H*.16}" r="26" fill="#ffe58a" stroke="${INK}" stroke-width="3"/>${cl(W*.08,H*.1,1.1)}${cl(W*.5,H*.2,.8)}${isl(W*.3)}${isl(W*.82)}</svg>`}
+function waveSvg(){return `<svg viewBox="0 0 100 70" preserveAspectRatio="none" class="ic" aria-hidden="true" style="width:100%;height:100%"><path d="M100 70C96 40 78 10 46 6C26 4 10 16 8 34C16 24 28 22 36 28C24 30 16 44 0 70Z" fill="#3cb6f0" stroke="${INK}" stroke-width="3" stroke-linejoin="round"/><path d="M46 6C26 4 10 16 8 34C16 24 28 22 36 28" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/><path d="M60 40q10 8 24 10M52 54q10 4 26 4" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="3" stroke-linecap="round"/></svg>`}
+function build(){const st=$('#sfst'),W=Math.round(st.clientWidth),H=Math.round(st.clientHeight);SF.W=W;SF.H=H;SF.f=Math.max(.72,Math.min(1.15,H/560));SF.wy=Math.round(H*.64);
+ $('#sfl0').style.width=W*2+'px';$('#sfl0').innerHTML=skySvg(W,H)+skySvg(W,H);
+ $('#sfl1').style.width=W*2+'px';$('#sfl1').innerHTML=wavySvg(W,H,H*.5,'#8fdcf7',[H*.54],3,3)+wavySvg(W,H,H*.5,'#8fdcf7',[H*.54],3,3);
+ $('#sfl2').style.width=W*2+'px';$('#sfl2').innerHTML=wavySvg(W,H,SF.wy,'#46b8ee',[SF.wy+H*.07,SF.wy+H*.15,SF.wy+H*.26],4,4)+wavySvg(W,H,SF.wy,'#46b8ee',[SF.wy+H*.07,SF.wy+H*.15,SF.wy+H*.26],4,4);
+ const f=SF.f;SF.sx=Math.round(W*.27);const me=$('#sfme');me.style.width=Math.round(120*f)+'px';SF.mh=Math.round(112*f);$('#sfimg').style.height=SF.mh+'px';place(0)}
+function place(j){const f=SF.f,me=$('#sfme');const bob=SF.state==='play'&&!j?Math.sin(SF.t*5)*2.5*f:0;
+ me.style.transform=`translate3d(${SF.sx-me.offsetWidth/2}px,${SF.wy-SF.mh*.9-18*f-j+bob}px,0)`;$('#sfbd').style.transform=`rotate(${j>0?-12:0}deg)`}
+function hud(){const bs=Math.max(S.sfBest||0,SF.score);$('#sfb').innerHTML=ico('crown',16)+'ベスト <b>'+bs+'</b>';$('#sfb').classList.toggle('new',SF.score>(S.sfBest||0)&&SF.score>0);$('#sfs').innerHTML=ico('star',16)+'<b>'+SF.score+'</b><small>なみ</small>'}
+function pop(x,y,txt,col){const d=document.createElement('div');d.className='pp';d.style.cssText=`left:${x}px;top:${y}px;color:${col}`;d.textContent=txt;$('#sffx').appendChild(d);
+ d.animate([{transform:'translate(-50%,0)',opacity:1},{transform:'translate(-50%,-40px)',opacity:1,offset:.6},{transform:'translate(-50%,-58px)',opacity:0}],{duration:850,easing:'ease-out'}).onfinish=()=>d.remove()}
+function speed(){return (215+Math.min(210,SF.score*10))*SF.f}
+function spawn(){const f=SF.f,w=(78+Math.random()*47)*f,h=(64+Math.random()*36)*f;const el=document.createElement('div');el.className='sfw';el.style.width=w+'px';el.style.height=h+'px';el.innerHTML=waveSvg();$('#sfw').appendChild(el);
+ const e={el,x:SF.W+w,w,h,ch:h*.68,hw:w*.27,done:false};SF.waves.push(e);SF.nextGap=speed()*(1.2+Math.random()*(1.15-Math.min(.35,SF.score*.02)))+w}
+function loop(now){if(!SF||SF.state!=='play')return;const dt=Math.min(.05,(now-SF.last)/1000);SF.last=now;SF.t+=dt;const v=speed(),f=SF.f;SF.o+=v*dt;
+ [.1,.3,1].forEach((k,i)=>{$('#sfl'+i).style.transform=`translate3d(${-((SF.o*k)%SF.W)}px,0,0)`});
+ let j=0;if(SF.jt>=0){SF.jt+=dt;const u=SF.jt/TJ;if(u>=1){SF.jt=-1}else j=155*f*4*u*(1-u)}
+ SF.j=j;place(j);
+ const last=SF.waves[SF.waves.length-1];if(!last||last.x<SF.W-SF.nextGap)spawn();
+ let dead=false;
+ SF.waves=SF.waves.filter(e=>{e.x-=v*dt;e.el.style.transform=`translate3d(${e.x-e.w/2}px,${SF.wy-e.h+SF.H*.05}px,0)`;
+  const dx=Math.abs(e.x-SF.sx);
+  if(!e.done&&dx<e.hw+14*f&&j<e.ch+4*f)dead=true;
+  if(!e.done&&e.x+e.hw+14*f<SF.sx){e.done=true;SF.score++;pop(SF.sx,SF.wy-SF.mh-30*f,SF.score%5===0?'いいぞ！ '+SF.score+'なみ':'ナイスライド！','#e0457b');hud()}
+  if(e.x<-e.w){e.el.remove();return false}return true});
+ if(dead){drown();return}
+ SF.raf=requestAnimationFrame(loop)}
+function jump(){if(!SF||SF.state!=='play'||SF.jt>=0)return;SF.jt=0;$('#sfimg').src=IMG['14'];setTimeout(()=>{if(SF&&SF.state==='play')$('#sfimg').src=IMG[SF.k]},TJ*1000)}
+function ov(h){$('#sfp2').innerHTML=h;$('#sfov').hidden=false}
+function intro(){ov(`<h3>${ico('surf',26)}サーフィン</h3><p>ハワイの海でサーフィン！<br>なみが ちかづいてきたら、<b>ちょうどいいタイミングで がめんをタップ</b>してジャンプ！<br>うまくのりこえたら <b>+1なみ</b>。<br>のりこえられないと、なみに のまれて ゲームオーバー。<br>のりこえたなみの かずだけ、ポイントがたまるよ。なみは だんだんはやくなるよ！</p><button class="mb p" data-sf="start">スタート</button>`)}
+function start(){$('#sfov').hidden=true;$('#sfw').innerHTML='';$('#sffx').innerHTML='';Object.assign(SF,{state:'play',t:0,o:0,score:0,waves:[],jt:-1,j:0,nextGap:SF.W*.55});$('#sfimg').src=IMG[SF.k];$('#sfme').style.opacity=1;$('#sfme').style.filter='';hud();SF.last=performance.now();SF.raf=requestAnimationFrame(loop)}
+function drown(){SF.state='drown';cancelAnimationFrame(SF.raf);const me=$('#sfme'),y=SF.wy-SF.mh*.9-18*SF.f-SF.j;
+ me.animate([{transform:me.style.transform,opacity:1},{transform:`translate3d(${SF.sx-me.offsetWidth/2-24}px,${y+70}px,0)`,opacity:.9,offset:.5},{transform:`translate3d(${SF.sx-me.offsetWidth/2-40}px,${y+SF.mh+40}px,0)`,opacity:0}],{duration:1000,fill:'forwards',easing:'ease-in'});
+ for(let i=0;i<9;i++){const b=document.createElement('i');b.className='sfbb';b.style.cssText=`left:${SF.sx-30+Math.random()*60}px;top:${SF.wy-10}px;width:${6+Math.random()*9}px;height:${6+Math.random()*9}px`;$('#sffx').appendChild(b);
+  b.animate([{transform:'translateY(0)',opacity:1},{transform:`translateY(${-30-Math.random()*60}px)`,opacity:0}],{duration:900+Math.random()*500,delay:Math.random()*350,fill:'forwards'})}
+ pop(SF.sx,SF.wy-SF.mh-30*SF.f,'ざぶーん！','#3b6fd9');
+ setTimeout(()=>{if(SF&&SF.state==='drown')finish()},1250)}
+function finish(){SF.state='done';const sc=SF.score,gain=sc*500,best=Math.max(S.sfBest||0,sc),nb=sc>(S.sfBest||0)&&sc>0;
+ S.cash+=gain;S.mood=cl(S.mood+(sc>=10?14:8));S.en=cl(S.en-12);S.sfBest=best;const m=step();
+ note(`ハワイでサーフィン！ ${sc}なみをのりこえて、${yen(gain)}のごほうびでした。`+m);react(sc>=8);hearts(sc>=10?5:2);render();
+ const star=sc>=15?3:sc>=8?2:sc>=3?1:0;
+ ov(`<h3>${ico('surf',26)}ゲームオーバー</h3><div class="ptres"><b>${sc}</b><span>なみ のりこえた！</span></div><p>${'★'.repeat(star)+'☆'.repeat(3-star)}　${['なみに のまれちゃった…','いいかんじ！','なみのりじょうず！','サーフィンの たつじん！'][star]}\nごほうび：+${yen(gain)}${nb?'\nじこベスト こうしん！':''}</p><div class="mrow"><button class="mb" data-sf="end">もどる</button><button class="mb p" data-sf="again">もういっかい</button></div>`)}
+window.openSF=function(){SF={state:'ready',score:0,t:0,o:0,waves:[],jt:-1,j:0,nextGap:0,f:1,wy:300};SF.k='08';
+ $('#sfimg').src=IMG[SF.k];$('#sfl').innerHTML=ico('surf',18)+'サーフィン';$('#sf').hidden=false;build();hud();intro()};
+window.SFdbg=()=>SF;
+function close(){if(SF){cancelAnimationFrame(SF.raf);SF=null}$('#sf').hidden=true;$('#sfw').innerHTML='';$('#sffx').innerHTML='';$('#sfme').getAnimations().forEach(a=>a.cancel())}
+document.addEventListener('click',e=>{if(!SF)return;const b=e.target.closest('[data-sf]');if(!b)return;const a=b.dataset.sf;
+ if(a==='start')start();else if(a==='again'){$('#sfme').getAnimations().forEach(a=>a.cancel());start()}else if(a==='end')close();else if(a==='quit'){if(SF.state==='play'||SF.state==='drown')note('サーフィンはおやすみしました。');close()}});
+document.addEventListener('pointerdown',e=>{if(SF&&e.target.closest('#sfst')&&!e.target.closest('#sfov'))jump()});
+})();
+
 </script>
 </body>
 </html>
