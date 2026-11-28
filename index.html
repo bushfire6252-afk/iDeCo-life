@@ -378,6 +378,17 @@ body.ending #ui,body.ending #hud,body.ending #note{display:none}
 .swh{position:absolute;top:52%;font-size:22px;font-weight:900;color:#ff6f9c;-webkit-text-stroke:1.5px #1f2a5a;paint-order:stroke fill;pointer-events:none;animation:swh 1.1s ease-out forwards}
 @keyframes swh{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-50px)}}
 #swhint{font-size:12.5px;font-weight:700;color:#4a5380;min-height:1.5em}
+#sn{position:fixed;inset:0;z-index:45;display:flex;align-items:center;justify-content:center;background:rgba(31,42,90,.6)}
+#sn[hidden]{display:none}
+#snfl{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:3}
+#snps{position:absolute;z-index:2;font-size:44px;font-weight:900;color:#ffe58a;-webkit-text-stroke:2px #1f2a5a;paint-order:stroke fill;opacity:0}
+#snp{position:relative;z-index:2;width:min(86vw,320px);background:#fff;color:#1f2a5a;border:3px solid #1f2a5a;border-radius:10px;box-shadow:0 6px 0 #1f2a5a;padding:14px 14px 16px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;transform:rotate(-2deg)}
+#snp .tape{position:absolute;top:-12px;left:50%;width:84px;height:22px;margin-left:-42px;background:#ffd34d;border:2.5px solid #1f2a5a;transform:rotate(3deg)}
+#snp h3{margin:0;font-size:18px;font-weight:900}
+#snph{width:100%;height:250px;border:3px solid #1f2a5a;border-radius:6px;background:linear-gradient(#ffd6e6,#fff3c9);display:flex;align-items:flex-end;justify-content:center;overflow:hidden;position:relative}
+#snph svg{position:absolute;inset:0;width:100%;height:100%}
+#snimg{position:relative;height:92%;width:auto}
+#snp p{margin:0;font-size:12.5px;line-height:1.6;color:#6b749c;font-weight:700}
 #bd{position:fixed;inset:0;z-index:45;display:flex;align-items:center;justify-content:center;background:rgba(255,196,224,.82);overflow:hidden}
 #bd[hidden]{display:none}
 #bdc{position:absolute;inset:0;pointer-events:none;overflow:hidden}
@@ -449,7 +460,7 @@ body.ending #ui,body.ending #hud,body.ending #note{display:none}
     <button class="mb p" data-t="new">はじめから</button>
     <button class="mb" data-t="cont" id="tcont">つづきから<small id="tinfo"></small></button>
   </div>
-  <p id="tlegal">※非公式の試作です。イデコちゃんは国民年金基金連合会のキャラクターです。<span id="tver">ver2.2</span></p>
+  <p id="tlegal">※非公式の試作です。イデコちゃんは国民年金基金連合会のキャラクターです。<span id="tver">ver2.3</span></p>
 </div>
 <div id="kk" hidden>
   <div class="top"><button class="tab" data-kk="quit" style="padding:7px 16px">やめる</button><div class="chip" id="kkp"></div></div>
@@ -512,6 +523,11 @@ body.ending #ui,body.ending #hud,body.ending #note{display:none}
   </svg><img id="swimg" alt="ブランコで遊ぶイデコちゃん"></div>
   <div id="swhint"></div>
   <button class="mb p" data-sw="ok" style="width:100%">おわる</button></div></div>
+<div id="sn" hidden><div id="snfl"></div><div id="snps">パシャッ！</div><div id="snp"><i class="tape"></i>
+  <h3>おしゃれスナップ！</h3>
+  <div id="snph"><svg viewBox="0 0 280 250" class="ic" aria-hidden="true"><path d="M30 40l8 14 14 8-14 8-8 14-8-14-14-8 14-8z" fill="#fff"/><path d="M240 70l6 10 10 6-10 6-6 10-6-10-10-6 10-6z" fill="#fff"/><path d="M236 18l4 7 7 4-7 4-4 7-4-7-7-4 7-4z" fill="#ffe58a"/><rect x="0" y="212" width="280" height="38" fill="#ffd1e0"/></svg><img id="snimg" alt="スナップ撮影されるイデコちゃん"></div>
+  <p>まちを歩いていたら、ファッション雑誌のカメラマンさんにスナップ撮影されたよ！<br>「そのジャケット、すてき！」</p>
+  <button class="mb p" data-sn="ok" style="width:100%">やったー！</button></div></div>
 <div id="bd" hidden><div id="bdc"></div><div id="bdp">
   <span class="bdd">4月14日</span><h3>イデコちゃん<br>おたんじょうび おめでとう！</h3>
   <div id="bdwrap"><img id="bdimg" alt="イデコちゃん"><svg id="bdcake" viewBox="0 0 120 100" class="ic" aria-hidden="true"><rect x="22" y="22" width="5" height="16" rx="2" fill="#7fd0ff"/><rect x="57" y="18" width="5" height="20" rx="2" fill="#ffd34d"/><rect x="92" y="22" width="5" height="16" rx="2" fill="#ff8fa8"/><path class="ns" d="M24.5 8q5 6 0 11q-5-5 0-11zM59.5 4q5 6 0 11q-5-5 0-11zM94.5 8q5 6 0 11q-5-5 0-11z" fill="#ff9a3c"/><rect x="8" y="38" width="104" height="24" rx="8" fill="#fff"/><rect x="8" y="58" width="104" height="30" rx="8" fill="#ffb3c6"/><path d="M8 62q13 10 26 0t26 0 26 0 26 0" fill="#fff"/><circle cx="30" cy="46" r="5" fill="#ff5a7a"/><circle cx="60" cy="46" r="5" fill="#ff5a7a"/><circle cx="90" cy="46" r="5" fill="#ff5a7a"/></svg></div>
@@ -678,7 +694,7 @@ function save(x){if(S.cash<x){note('おこづかいがたりません。');react
  note(yen(x)+'を積み立てました。原則60歳になるまで引き出せないお金です。メモ：'+pick(FACTS));hearts(3,'🌱');react(true);render()}
 function go(k){if(k===S.place)return;
  const sp=$('#spot');sp.classList.add('off');if(OUT[S.outfit].k==='05')setImg('21');
- setTimeout(()=>{S.place=k;const m=step();sp.classList.remove('off');note(PL[k].n+'にやってきました。'+m);react(false);render()},350)}
+ setTimeout(()=>{S.place=k;const m=step();sp.classList.remove('off');note(PL[k].n+'にやってきました。'+m);react(false);render();if(k==='town'&&OUT[S.outfit].k==='22'&&Math.random()<SNAP_P)setTimeout(snapPop,600)},350)}
 function dress(i){
  if(!S.owned.includes(i)){note('「'+OUT[i].n+'」は、おかいものでショップに行って買うと、きがえられるようになります。');react(false,'shake');return}
  S.outfit=i;S.mood=cl(S.mood+4);note(OUT[i].n+'のすがたになりました。');hearts(3,'✨');react(true);render()}
@@ -1224,7 +1240,7 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-ed]');if(!
  if(a==='cont')edClose();else if(a==='skip'){edStop();edEnd()}else if(a==='again'){$('#edcard').hidden=true;$('#edskip').hidden=false;edScene(0)}});
 
 /* ===== birthday (10/4, month 7 week 1) ===== */
-function bdayPop(){const busy=['#pt','#kk','#mg','#mt','#shop','#pick','#adv','#title','#ed','#bd','#sw','#sf'].some(s=>{const e=document.querySelector(s);return e&&!e.hidden})||!$('#sheet').hidden;
+function bdayPop(){const busy=['#pt','#kk','#mg','#mt','#shop','#pick','#adv','#title','#ed','#bd','#sw','#sf','#sn'].some(s=>{const e=document.querySelector(s);return e&&!e.hidden})||!$('#sheet').hidden;
  if(busy){setTimeout(bdayPop,800);return}
  const bd=$('#bd');bd.hidden=false;$('#bdimg').src=IMG['08'];
  const cs=$('#bdc');cs.innerHTML='';const cols=['#ff8fa8','#ffd34d','#7fd0ff','#8be0a0','#c49bff','#ffb36b'];
@@ -1326,6 +1342,17 @@ document.addEventListener('click',e=>{if(!SF)return;const b=e.target.closest('[d
  if(a==='start')start();else if(a==='again'){$('#sfme').getAnimations().forEach(a=>a.cancel());start()}else if(a==='end')close();else if(a==='quit'){if(SF.state==='play'||SF.state==='drown')note('サーフィンはおやすみしました。');close()}});
 document.addEventListener('pointerdown',e=>{if(SF&&e.target.closest('#sfst')&&!e.target.closest('#sfov'))jump()});
 })();
+
+/* ===== fashion snap (jacket x town, 30%) ===== */
+const SNAP_P=.3;
+function snapPop(){const busy=['#pt','#sf','#kk','#mg','#mt','#shop','#pick','#adv','#title','#ed','#bd','#sw'].some(s=>{const e=document.querySelector(s);return e&&!e.hidden})||!$('#sheet').hidden;
+ if(busy){setTimeout(snapPop,800);return}
+ $('#snimg').src=IMG['22'];$('#sn').hidden=false;
+ $('#snfl').animate([{opacity:0},{opacity:1,offset:.12},{opacity:0}],{duration:900,easing:'ease-out'});
+ $('#snps').animate([{transform:'scale(.5)',opacity:0},{transform:'scale(1.4)',opacity:1,offset:.25},{transform:'scale(1)',opacity:1,offset:.6},{transform:'scale(1)',opacity:0}],{duration:1100,easing:'ease-out',fill:'forwards'});
+ $('#snp').animate([{transform:'translateY(40px) rotate(-5deg) scale(.8)',opacity:0},{transform:'translateY(0) rotate(-2deg) scale(1.02)',opacity:1,offset:.7},{transform:'translateY(0) rotate(-2deg) scale(1)',opacity:1}],{duration:700,delay:700,fill:'backwards',easing:'ease-out'})}
+document.addEventListener('click',e=>{if(e.target.closest('[data-sn]')){$('#sn').hidden=true;S.mood=cl(S.mood+12);
+ note('まちで、ファッション雑誌のスナップ撮影！「そのジャケット、すてき！」とほめられて、気分がアップしました。');hearts(5,'✨');react(true);render()}});
 
 </script>
 </body>
